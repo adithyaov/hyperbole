@@ -1,4 +1,5 @@
 {-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE CPP #-}
 
 module Web.Hyperbole.Effect.OAuth2
   ( OAuth2 (..)
@@ -151,12 +152,23 @@ data Access
 data State
 data Auth
 
-
 data AuthFlow = AuthFlow
   { redirect :: URI
   , state :: Token State
   }
+#if MIN_VERSION_aeson(2,2,0)
   deriving (Generic, FromJSON, ToJSON)
+#else
+  deriving (Generic)
+
+instance FromJSON URI
+instance ToJSON URI
+instance FromJSON AuthFlow
+instance ToJSON AuthFlow
+instance FromJSON URIAuth
+instance ToJSON URIAuth
+#endif
+
 instance Session AuthFlow where
   sessionKey = "OAuth2AuthFlow"
   cookiePath = Just $ Path True []
