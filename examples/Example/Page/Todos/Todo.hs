@@ -121,6 +121,7 @@ todoForm filt = do
     el ~ pad 8 $ do
       button (ToggleAll filt) Icon.chevronDown ~ width 32 . hover (color Primary)
     form SubmitTodo ~ grow $ do
+      -- Q: Do we need the label tag here?
       field f.task $ label $
         input TextInput ~ pad 12 @ placeholder "What needs to be done?" . value ""
 
@@ -165,6 +166,7 @@ todoEditView filt todo = do
   let f = fieldNames @TodoForm
   row ~ border (TRBL 0 0 1 0) . pad 10 $ do
     form (SubmitEdit filt todo) ~ pad (TRBL 0 0 0 46) $ do
+      -- Q: Do we need the label tag here?
       field f.task $ label $ do
         input TextInput @ value todo.task . autofocus ~ pad 4
 
